@@ -1,0 +1,13 @@
+# Design Patterns Interview Prep - Python Requirements
+# 
+# This project uses only Python standard library modules.
+# No external dependencies are required for the core functionality.
+#
+# Optional dependencies for enhanced features:
+# pytest>=7.0.0          # For running tests (if added)
+# black>=22.0.0           # For code formatting
+# flake8>=4.0.0           # For linting
+# mypy>=0.950             # For type checking
+#
+# To install optional dependencies:
+# pip install -r requirements.txt
