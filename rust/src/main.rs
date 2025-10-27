@@ -124,6 +124,7 @@ impl DesignPatternsMenu {
             io::stdin().read_line(&mut choice).expect("Failed to read line");
             let choice = choice.trim();
             
+            // Parse the choice as a number for proper numeric comparison
             match choice {
                 "16" => {
                     self.display_interview_tips();
@@ -136,27 +137,36 @@ impl DesignPatternsMenu {
                     println!("Good luck with your interviews! 🚀");
                     break;
                 }
-                pattern if pattern >= "1" && pattern <= "15" => {
-                    self.run_pattern_demo(pattern);
-                    
-                    print!("\n🔄 Would you like to explore another pattern? (y/n): ");
-                    io::Write::flush(&mut io::stdout()).expect("Failed to flush stdout");
-                    
-                    let mut continue_choice = String::new();
-                    io::stdin().read_line(&mut continue_choice).expect("Failed to read line");
-                    
-                    if continue_choice.trim().to_lowercase() != "y" && 
-                       continue_choice.trim().to_lowercase() != "yes" {
-                        println!("\n🎉 Thanks for using Design Patterns Interview Prep (Rust Edition)!");
-                        println!("Good luck with your interviews! 🚀");
-                        break;
+                pattern => {
+                    // Try to parse as a number
+                    if let Ok(num) = pattern.parse::<u32>() {
+                        if num >= 1 && num <= 15 {
+                            self.run_pattern_demo(pattern);
+                            
+                            print!("\n🔄 Would you like to explore another pattern? (y/n): ");
+                            io::Write::flush(&mut io::stdout()).expect("Failed to flush stdout");
+                            
+                            let mut continue_choice = String::new();
+                            io::stdin().read_line(&mut continue_choice).expect("Failed to read line");
+                            
+                            if continue_choice.trim().to_lowercase() != "y" && 
+                               continue_choice.trim().to_lowercase() != "yes" {
+                                println!("\n🎉 Thanks for using Design Patterns Interview Prep (Rust Edition)!");
+                                println!("Good luck with your interviews! 🚀");
+                                break;
+                            }
+                        } else {
+                            println!("❌ Invalid choice! Please select 1-17.");
+                            println!("\nPress Enter to continue...");
+                            let mut buffer = String::new();
+                            io::stdin().read_line(&mut buffer).unwrap();
+                        }
+                    } else {
+                        println!("❌ Invalid choice! Please enter a number between 1-17.");
+                        println!("\nPress Enter to continue...");
+                        let mut buffer = String::new();
+                        io::stdin().read_line(&mut buffer).unwrap();
                     }
-                }
-                _ => {
-                    println!("❌ Invalid choice! Please select 1-17.");
-                    println!("\nPress Enter to continue...");
-                    let mut buffer = String::new();
-                    io::stdin().read_line(&mut buffer).unwrap();
                 }
             }
         }
